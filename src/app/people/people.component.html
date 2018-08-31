@@ -1,0 +1,156 @@
+<div class="container-fluid">
+    <nav class="navbar">
+        <!-- site logo -->
+        <a class="navbar-brand sticky-top" href="http://gitapp.mydreamworld.xyz"  title="GITAPP">
+            <img src="../assets/2gh66h.gif" width="50" height="40" class="d-inline-block align-top" alt="">
+            GITAPP
+        </a>
+
+        <ul class="nav justify-content-end">
+            <li class="nav-item">  <!-- go currenct authorized user -->
+                <a class="nav-link logoutbtn" style="font-family:'Lucida Sans Regular' ,Geneva" routerLink="/home" title="me">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="tooltiptext">My Profile</span>
+                </a>
+            </li> <!-- log out button -->
+            <li class="nav-item">
+                <a class="nav-link logoutbtn" style="font-family:'Lucida Sans Regular' ,Geneva" data-toggle="modal" data-target="#exampleModal" title="SIGNOUT">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="tooltiptext">LogOut</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <br/>
+    
+    <br/> <!-- Users profile information opens when click on above image button -->
+            <div class="card">
+                <div class="card-header">
+                    <img class="card-img-top" src="{{details.avatar_url}}" alt="Card image cap">&nbsp;&nbsp;<a class="card-header" href="{{details.html_url}}">{{details.name}}</a>
+                    <span class="tooltiptext">GITHUB profile</span>
+                    <br/>
+                    
+                    <table class="table">
+                            <tr class="tabletitle">
+                                <th><small class="sm"><i class="fas fa-star"></i><br/>Stars</small></th>
+                                <th><small class="sm"><i class="fas fa-users"></i><br/>Following</small></th>
+                                <th><small class="sm"><i class="fas fa-user-friends"></i><br/>Followers</small></th>
+                                <th><small class="sm"><i class="fas fa-book"></i><br/>Repo.</small></th>
+                                <th><small class="sm"><i class="fas fa-file-alt"></i><br/>Gists</small></th>                      
+                            </tr>
+                            <tr>
+                                <th>{{sl}}</th>
+                                <th >{{details.following}}</th>
+                                <th>{{details.followers}} </th>
+                                <th>{{details.public_repos}}  </th>
+                                <th>{{details.public_gists}}</th>
+                            </tr>
+                    </table>  
+                </div>
+                
+                <div class="card-body">
+                  <p class="card-text"><i class="fas fa-pen-square"></i>Bio <br/>{{details.bio}}</p>
+                  <p class="card-text"><i class="fas fa-map-marker-alt"></i>&nbsp;{{details.location}}</p>
+                </div>
+            </div>
+
+    <!-- Modal box for log-out -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Are you sure want to sign out??</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button type="button" (click)="logout()" data-dismiss="modal" class="btn btn-primary">Yes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    <br/>
+    <br/>
+    <div class="card-deck">
+        <!-- repository list -->
+            <div class="card deckcard">
+                <div class="card-header deckheader">
+                    <h5 class="card-title"><i class="fas fa-book"></i>&nbsp;Repositories</h5>
+                </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="details.public_repos==0">
+                        <li class="list-group-item"><i class="far fa-frown"></i>&nbsp;Not yet&nbsp;<i class="far fa-sad-tear"></i></li>
+                </ul>
+                <ul class="list-group list-group-flush" *ngFor="let r of reposarray">
+                    <li class="list-group-item"><a class="list-group-item" (click)="gotorepo(url=r.html_url)">{{r.full_name}}</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- gist list -->
+            <div class="card deckcard">
+                    <div class="card-header deckheader">
+                            <h5 class="card-title"><i class="fas fa-file-alt"></i>&nbsp;Gists</h5>
+                    </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="details.public_gists==0">
+                        <li class="list-group-item"><i class="far fa-frown"></i>&nbsp;Not yet&nbsp;<i class="far fa-sad-tear"></i></li>
+                </ul>
+                <ul class="list-group list-group-flush" *ngFor="let gt of gname">
+                    <li class="list-group-item"><a class="list-group-item" (click)="opengist(n=gt.link)">{{gt.name}}</a></li>
+                </ul>
+              </div>
+            </div>
+    </div>
+        <br/>
+        <div class="card-deck"> 
+            <!-- followers users -->
+            <div class="card deckcard">
+                    <div class="card-header deckheader">
+                            <h5 class="card-title"><i class="fas fa-user-friends"></i>&nbsp;Followers</h5>
+                    </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="details.followers==0">
+                    <li class="list-group-item"><i class="far fa-frown"></i>&nbsp;Not yet&nbsp;<i class="far fa-sad-tear"></i></li>
+                </ul>
+                <ul class="list-group list-group-flush" *ngFor="let fl of f">
+                    <li  class="list-group-item"><a class="list-group-item" (click)="newuser(nu=fl.url)">{{fl.login}}</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- following users -->
+            <div class="card deckcard">
+                    <div class="card-header deckheader">
+                            <h5 class="card-title"><i class="fas fa-users"></i>&nbsp;Following</h5>
+                    </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="details.followers==0">
+                    <li class="list-group-item"><i class="far fa-frown"></i>&nbsp;Not yet&nbsp;<i class="far fa-sad-tear"></i></li>
+                </ul>
+                <ul class="list-group list-group-flush" *ngFor="let fi of fw">
+                    <li  class="list-group-item"><a class="list-group-item" (click)="newuser(nu=fi.url)">{{fi.login}}</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+
+    <!-- card ends -->
+    <br/><br/>
+    <footer >
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <p>© 2018 GITAPP</p>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../assets/About.html">ABOUT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../assets/help.html">HELP</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="contact()">CONTACT US</a>
+            </li>
+        </ul>     
+    </footer>
+</div>

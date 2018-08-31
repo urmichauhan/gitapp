@@ -1,16 +1,65 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule,Injectable, ViewContainerRef } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { HttpClient,HttpResponse,HttpErrorResponse, HttpClientModule } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import {RouterModule,Routes,Router} from '@angular/router';
+import {ReqservicesService} from './reqservices.service';
 import { AppComponent } from './app.component';
+import { ToastrModule,ToastContainerModule } from 'ngx-toastr/';
+import { CookieService } from 'ngx-cookie-service';
+
+import  'rxjs';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { ErrComponent } from './err/err.component';
+import { PeopleComponent } from './people/people.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    ErrComponent,
+    PeopleComponent
   ],
   imports: [
-    BrowserModule
+    CommonModule,
+    HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule, // required animations module
+    ToastContainerModule,
+    ToastrModule.forRoot({
+      iconClasses:{
+        error: 'toast-error',
+        info: 'toast-info',
+        success: 'toast-success',
+        warning: 'toast-warning'
+      },
+      progressBar:true,
+      onActivateTick:true,
+      //positionClass: 'inline',
+      enableHtml:true,
+     positionClass:'toast-top-right',
+      closeButton:true,
+      maxOpened:1
+    }),
+    RouterModule.forRoot([
+      {path:'app',component :AppComponent},
+      {path:'home',component:HomeComponent},
+      { path: 'login', component: LoginComponent, pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      {path:'home',component:HomeComponent},
+      {path:'err',component:ErrComponent},
+      {path:'people',component:PeopleComponent}
+     ])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ReqservicesService,CookieService],
+  exports:[
+    RouterModule
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

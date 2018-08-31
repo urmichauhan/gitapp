@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <a class="navbar-brand sticky-top" href="http://gitapp.mydreamworld.xyz"  title="GITAPP">
+        <img src="../assets/2gh66h.gif" width="50" height="40" class="d-inline-block align-top" alt="">
+        GITAPP
+    </a>
+
+    <br/><br/>
+    <div class="parent">
+        <div class="leftdiv" style="order: 1;"> 
+            <h1 class="lead">
+                <i class="fas fa-quote-left"></i> When I'm old and dying , <br/><br/>
+                I plan to look back on my life and say <br/><br/>
+                <p class="quote">'Wow that was an adventure'</p>not <br/><br/>
+                <p class="quote">'Wow I sure felt safe'<i class="fas fa-quote-right"></i></p>
+                <span class="founder">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Tom preston-werner ,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Github Co-founder
+            </span></h1>
+        </div>
+
+            <div class="speech-bubble" style="order: 2;">
+              <h1 class="headerform">SIGNIN</h1>
+              <i class="material-icons">
+                perm_identity
+                </i>
+            <form>
+              <input (change)="hidetextevent(inputval.value)" #inputval type="password" class="tokeninput"  placeholder="Enter Token"><br/>
+              <small *ngIf="hidetext" class="textnote">Please enter GITHUB token</small><br/>
+              <button type="button" (click)="checkuser(inputval.value)" data-toggle="modal" data-target="#exampleModal" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i></button><br/><br/>
+            </form>
+              <a class="links" href="https://github.com/settings/tokens">Create Token</a><br/>
+              <a class="links" href="https://github.com/join?source=experiment-header-dropdowns-home">Register to GITHUB?</a>
+            </div>
+    </div>
+    
+    <!-- Modal box for log-out -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                
+                <div *ngIf="incorrectuser" class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">You are UNAUTHORIZED user<i class="fas fa-exclamation-triangle"></i><br/>
+                    Please Create Token from below link.</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button"  class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+
+              <div *ngIf="correctuser" class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Is this Your correct Username of GITHUB : "{{details.login}}"<i class="fas fa-question"></i></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" (click)="wronguser(u=details.login)" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button type="button" (click)="gotohome()" class="btn btn-primary" >Yes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    <br/>
+    
+</div>
